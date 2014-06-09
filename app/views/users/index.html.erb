@@ -1,0 +1,37 @@
+<h1>Welcome to session practice</h1>
+
+<b>
+  <% if flash[:success] %>
+    <%= flash[:success] %>
+  <% end %>
+  <% if flash[:error] %>
+    <%= flash[:error] %>
+  <% end %>
+</b>
+
+<% if @current_user %>
+  <p>You're signed in as <%= @current_user.email %>.</p>
+  <p><%= link_to "View yourself", "/users/#{@current_user.id}" %></p>
+  <p><%= link_to "Logout", "/sign_out" %></p>
+<% else %>
+  <h4>Sign in here: </h4>
+  <!-- form_for is used for a particular instance of a resource -->
+  <!-- form_tag is used in the general case -->
+  <%= form_tag('/sign_in', method: 'post') do %>
+    <p> Email: 
+      <%= email_field_tag :email %>
+    </p>
+    <p> Password:
+      <%= password_field_tag :password %>
+    </p>
+    <p>
+      <%= submit_tag "Go" %>
+    </p>
+  <% end %>
+<% end %>
+
+<% @users.each do |user| %>
+  <p>
+    <%= user.email %>, with password: <%= user.password %>.
+  </p>
+<% end %>
